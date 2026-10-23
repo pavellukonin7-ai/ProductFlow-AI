@@ -1,0 +1,31 @@
+name: Bootstrap ProductFlow AI source
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'release/ProductFlow_AI_GitHub_v1.7.0.zip'
+      - '.github/workflows/bootstrap-productflow.yml'
+permissions:
+  contents: write
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Unpack sanitized ProductFlow AI source
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/productflow-src
+          mkdir -p /tmp/productflow-src
+          unzip -q release/ProductFlow_AI_GitHub_v1.7.0.zip -d /tmp/productflow-src
+          shopt -s dotglob
+          cp -a /tmp/productflow-src/product-mcp/* .
+          rm -rf release
+          rm -f .github/workflows/bootstrap-productflow.yml
+      - name: Commit source tree
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Publish ProductFlow AI v1.7.0 source, Web Admin and screenshots" || exit 0
+          git push
