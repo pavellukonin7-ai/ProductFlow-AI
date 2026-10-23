@@ -1,0 +1,9 @@
+[project]
+name = "product-mcp"
+version = "1.7.0"
+description = "ProductFlow AI: MCP inventory, CRM reservations, Telegram assistant, Web Admin and REST API"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

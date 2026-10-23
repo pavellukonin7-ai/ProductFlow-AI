@@ -1,0 +1,19 @@
+[Unit]
+Description=ProductFlow AI Web Admin and REST API
+After=network-online.target productflow-ai.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/productflow-ai
+ExecStart=/opt/productflow-ai/.venv/bin/python -m web_admin.main
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+Restart=always
+RestartSec=5
+TimeoutStopSec=20
+KillSignal=SIGTERM
+
+[Install]
+WantedBy=multi-user.target

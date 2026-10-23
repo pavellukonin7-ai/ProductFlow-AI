@@ -1,0 +1,19 @@
+[Unit]
+Description=ProductFlow AI Telegram MCP Bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/productflow-ai
+ExecStart=/opt/productflow-ai/.venv/bin/python -m telegram_bot.main
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+Restart=always
+RestartSec=5
+TimeoutStopSec=30
+KillSignal=SIGTERM
+
+[Install]
+WantedBy=multi-user.target

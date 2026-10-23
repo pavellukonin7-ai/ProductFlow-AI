@@ -1,0 +1,8 @@
+[Unit]
+Description=ProductFlow AI SQLite backup
+
+[Service]
+Type=oneshot
+User=root
+WorkingDirectory=/opt/productflow-ai
+ExecStart=/opt/productflow-ai/.venv/bin/python -m scripts.backup
