@@ -11,3 +11,8 @@ pytest-anyio>=0.0.0
 
 qrcode[pil]>=8.0,<9
 Pillow>=10,<13
+
+# Web Admin / REST API
+starlette>=0.47,<1
+uvicorn>=0.35,<1
+python-multipart>=0.0.20,<1
