@@ -3,7 +3,7 @@ on:
   push:
     branches: [main]
     paths:
-      - 'bootstrap/source.part*.b64'
+      - 'bootstrap/**'
       - '.github/workflows/bootstrap-productflow.yml'
 
 permissions:
@@ -14,7 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Rebuild and verify source archive
         shell: bash
         run: |
@@ -22,7 +21,6 @@ jobs:
           cat bootstrap/source.part*.b64 | base64 --decode > /tmp/ProductFlow_AI_source_only.zip
           echo "225c707d11a88abd8deec3dbfdc3038c04bfe6e742fd7d6fbeaac78c6d499b16  /tmp/ProductFlow_AI_source_only.zip" | sha256sum -c -
           unzip -t /tmp/ProductFlow_AI_source_only.zip
-
       - name: Publish sanitized source tree
         shell: bash
         run: |
@@ -30,12 +28,9 @@ jobs:
           rm -rf /tmp/productflow-src
           mkdir -p /tmp/productflow-src
           unzip -q /tmp/ProductFlow_AI_source_only.zip -d /tmp/productflow-src
-
-          rsync -a             --exclude='.github/'             /tmp/productflow-src/product-mcp/ ./
-
+          rsync -a --exclude='.github/' /tmp/productflow-src/product-mcp/ ./
           rm -rf bootstrap release
           rm -f .github/workflows/bootstrap-productflow.yml
-
       - name: Commit ProductFlow AI v1.7.0
         shell: bash
         run: |
